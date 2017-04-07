@@ -1,6 +1,5 @@
-var home = angular.module('homeApp', []);
-
-home.controller('HomeController', ['$scope', function($scope) {
+var app = angular.module('index', [])
+	.controller('indexCtrl', function($scope) {
     // default map options
 
     var mapOptions = {
@@ -13,4 +12,4 @@ home.controller('HomeController', ['$scope', function($scope) {
 
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-}]);
+});
