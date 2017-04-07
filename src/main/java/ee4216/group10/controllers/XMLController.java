@@ -80,7 +80,52 @@ public class XMLController {
 		return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
 	}
 	
+	
+	//Get Traffic News XML
+	@RequestMapping(path = "/get-stations", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	//private ResponseEntity<List<ChargerLocation>> sendGetTrafficNews() throws Exception {
+	private void sendGetTrafficNews() throws Exception {
 
+		String url = "https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E";
+
+		HttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet(url);
+
+		// add request header
+		//request.addHeader("User-Agent", USER_AGENT);
+
+		HttpResponse response = client.execute(request);
+
+		System.out.println("\nSending 'GET' request to URL : " + url);
+		System.out.println("Response Code : " +
+                       response.getStatusLine().getStatusCode());
+
+		BufferedReader rd = new BufferedReader(
+                       new InputStreamReader(response.getEntity().getContent()));
+
+		StringBuffer result = new StringBuffer();
+		String line = "";
+		while ((line = rd.readLine()) != null) {
+			result.append(line);
+		}
+		
+		//System.out.println(result.toString());
+		
+		XmlMapper mapper = new XmlMapper();
+		OpenChargerLocation openChargerLocation = mapper.readValue(result.toString(), OpenChargerLocation.class);
+		/*
+		for (int i =0 ; i< openChargerLocation.getStationList().getStation().length; i ++)
+		{
+			System.out.println(openChargerLocation.getStationList().getStation()[i].getLocation() + " Latitude: " + openChargerLocation.getStationList().getStation()[i].getLatitude() + " Longtitude: " + openChargerLocation.getStationList().getStation()[i].getLongtitude());
+		}
+		*/
+		List<ChargerLocation> locations = new ArrayList<ChargerLocation>();
+		for(ChargerLocation location: openChargerLocation.getStationList().getStation()) {
+			locations.add(location);
+		}
+		
+		return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
+	}
 	
 }
 
