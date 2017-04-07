@@ -4,17 +4,31 @@
 <head>
     <meta charset="utf-8"></meta>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-    <title>Google Maps Javascript API v3 Demo - 1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    
+    <title>Electric Vehicle Charger Locater</title>
+    
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="/css/ui-grid.min.css"></link>
     <link rel="stylesheet" href="/css/index.css"></link>
+    
 </head>
 
 <body ng-controller="indexCtrl">
-    <div id="map">
-    </div>
+	<div class="container">
+		<h2>Electric Vehicle Charging Station Locator</h2>
+		<div id="map">
+    	</div>
+    	
+    	<div ui-grid="{data: locations}" class="grid"></div>
+	</div>
     
  	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLUT5kLdoTl5dawmFNlz0tAheiPPCVtxU"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/ui-grid.min.js"></script>
     <script src="/js/map.js"></script>
 </body>
 
