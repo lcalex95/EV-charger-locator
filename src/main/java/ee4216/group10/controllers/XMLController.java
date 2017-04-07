@@ -124,7 +124,7 @@ public class XMLController {
 			locations.add(location);
 		}
 		
-		return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
+		//return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
 	}
 	
 }
