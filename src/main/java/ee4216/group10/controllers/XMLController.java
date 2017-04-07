@@ -55,8 +55,8 @@ public class XMLController {
 			result.append(line);
 		}
 		
-		ChargerLocation location = new ChargerLocation();
-
+		ArrayList<ChargerLocation> loct = new ArrayList<ChargerLocation>();
+		
 		System.out.println(result.toString());
 
 	}
