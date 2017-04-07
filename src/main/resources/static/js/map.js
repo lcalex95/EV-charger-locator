@@ -1,5 +1,5 @@
-var app = angular.module('index', [])
-	.controller('indexCtrl', function($scope) {
+var app = angular.module('index', ['ui.grid'])
+	.controller('indexCtrl', function($scope, $http, $log) {
     // default map options
 
     var mapOptions = {
@@ -7,33 +7,48 @@ var app = angular.module('index', [])
             lat: 22.3564,
             lng: 114.1095
         },
-        zoom: 12
+        zoom: 11
     };
-    var locations = [
-    	{
-    		latittude: 22.4504833221436,
-    		longtittude: 114.160835266113,
-    		chargeType: "SemiQuick"
-    	},
-    	{
-    		latittude: 22.4924488067627,
-    		longtittude: 114.13890838623,
-    		chargeType: "Standard"
-    	},
-    ];
-     
+    $scope.locations = [];
+    $scope.visibleLocations = [];
+    
+    
+    $scope.locations = [];
+    $scope.visibleLocations = [];
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
+    function getAllLocations() {
+    	$http.get('/get-stations')
+    		.success(function(data) {
+    			if(data != undefined) {
+    				$scope.locations = data;
+    			}
+    			else {
+    				$log.log('ERROR: Unable to load locations data');
+    			}
+    		})
+    }
+    
+    getAllLocations();
+    
+    function getAllLocations() {
+    	$http.get('/get-stations')
+    		.success(function(data) {
+    			if(data != undefined) {
+    				$scope.locations = data;
+    			}
+    			else {
+    				$log.log('ERROR: Unable to load locations data');
+    			}
+    		})
+    }
       
     function loadLocation(){
   
     var marker,i;
     
-        
     for(i=0;i<locations.length;i++){
-    	var contentString = locations[i].chargeType;
-    	var infowindow = new google.maps.InfoWindow({
-    	    content: contentString
-    	});
+    	
     	marker = new google.maps.Marker({
         position: new google.maps.LatLng(locations[i].latittude, locations[i].longtittude),
         map: $scope.map
@@ -41,6 +56,10 @@ var app = angular.module('index', [])
     	
     	marker.addListener('click', (function(marker,i) {
     		return function(){
+    			var contentString = locations[i].chargeType;
+    	    	var infowindow = new google.maps.InfoWindow({
+    	    	    content: contentString
+    	    	});
     	
         infowindow.open($scope.map, marker);
     		}
@@ -49,4 +68,5 @@ var app = angular.module('index', [])
     }
       
     loadLocation();
+    getAllLocations();
 });
