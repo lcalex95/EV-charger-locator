@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="homeApp">
+
 <head>
-<meta charset="UTF-8">
-<title>Index</title>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLUT5kLdoTl5dawmFNlz0tAheiPPCVtxU"></script>
+    <title>Google Maps Javascript API v3 Demo - 1</title>
 </head>
-<body>
-	<span>This is the index page.</span>
+
+<body ng-controller="HomeController">
+    <div id="map"></div>
+ <script src="/js/map.js"></script>
 </body>
+
 </html>
