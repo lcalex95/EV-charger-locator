@@ -36,7 +36,7 @@ public class XMLController {
 	//https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E 
 	//private final String USER_AGENT = "Mozilla/5.0";
 	
-	@RequestMapping(path = "/get-xml", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@RequestMapping(path = "/get-stations", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private ResponseEntity<List<ChargerLocation>> sendGet() throws Exception {
 
 		String url = "https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E";
