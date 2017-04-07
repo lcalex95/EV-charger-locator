@@ -9,37 +9,51 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
+import ee4216.group10.xml.ChargerLocation;
+import ee4216.group10.xml.OpenChargerLocation;
 
 public class TestMain {
 
 	public static void main(String[] args) throws ClientProtocolException, IOException {
 		// TODO Auto-generated method stub
-		
-		String url = "https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E";
 
-		HttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
+			String url = "https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E";
 
-		// add request header
-		//request.addHeader("User-Agent", USER_AGENT);
+			HttpClient client = new DefaultHttpClient();
+			HttpGet request = new HttpGet(url);
 
-		HttpResponse response = client.execute(request);
+			// add request header
+			//request.addHeader("User-Agent", USER_AGENT);
 
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " +
-                       response.getStatusLine().getStatusCode());
+			HttpResponse response = client.execute(request);
 
-		BufferedReader rd = new BufferedReader(
-                       new InputStreamReader(response.getEntity().getContent()));
+			System.out.println("\nSending 'GET' request to URL : " + url);
+			System.out.println("Response Code : " +
+	                       response.getStatusLine().getStatusCode());
 
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-			result.append(line);
-		}
+			BufferedReader rd = new BufferedReader(
+	                       new InputStreamReader(response.getEntity().getContent()));
 
-		System.out.println(result.toString());
-
+			StringBuffer result = new StringBuffer();
+			String line = "";
+			while ((line = rd.readLine()) != null) {
+				result.append(line);
+			}
+			
+			
+			
+			/*System.out.println(result.toString());*/
+			XmlMapper mapper = new XmlMapper();
+			OpenChargerLocation openChargerLocation = mapper.readValue(result.toString(), OpenChargerLocation.class);
+			for (int i =0 ; i< openChargerLocation.getStationList().getStation().length; i ++)
+			{
+				System.out.println(openChargerLocation.getStationList().getStation()[i].getLocation() + " Latitude: " + openChargerLocation.getStationList().getStation()[i].getLatitude() + " Longtitude: " + openChargerLocation.getStationList().getStation()[i].getLongtitude());
+			}
+			
 	}
 
 }
