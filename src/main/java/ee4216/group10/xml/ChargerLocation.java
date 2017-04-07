@@ -1,19 +1,35 @@
 package ee4216.group10.xml;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 public class ChargerLocation {
-	
-	private int station_no;
-	private float latitude;
-	private float longtitude;
-	private String charge_type;
-	private String district_L;
-	private String district_S;
+	@JacksonXmlProperty(localName = "no")
+	private String no;
+	@JacksonXmlProperty(localName = "location")
+	private String location;
+	@JacksonXmlProperty(localName = "lat")
+	private String lat;
+	@JacksonXmlProperty(localName = "lng")
+	private String lng;
+	@JacksonXmlProperty(localName = "type")
+	private String type;
+	@JacksonXmlProperty(localName = "districtL")
+	private String districtL;
+	@JacksonXmlProperty(localName = "districtS")
+	private String districtS;
+	@JacksonXmlProperty(localName = "address")
 	private String address;
+	@JacksonXmlProperty(localName = "provider")
 	private String provider;
-	private String parking_no;
+	@JacksonXmlProperty(localName = "parkingNo")
+	private String parkingNo;
+	@JacksonXmlProperty(localName = "img")
+	private String img;
 	
-	public ChargerLocation(int stationNo, float lat, float lng, String chargeType, String districtL, String districtS, String adr, String provider, String parkingNo)
+/*	
+ 	public ChargerLocation(int stationNo, float lat, float lng, String chargeType, String districtL, String districtS, String adr, String provider, String parkingNo)
 	{
 		this.station_no = stationNo;
 		this.latitude = lat;
@@ -25,35 +41,41 @@ public class ChargerLocation {
 		this.provider=provider;
 		this.parking_no=parkingNo;
 	}
+	*/
 	
-	public int getStationNo()
+	public String getStationNo()
 	{
-		return station_no;
+		return no;
 	}
 	
-	public float getLatitude()
+	public String getLocation()
 	{
-		return latitude;
+		return location;
 	}
 	
-	public float getLongtitude()
+	public String getLatitude()
 	{
-		return longtitude;
+		return lat;
+	}
+	
+	public String getLongtitude()
+	{
+		return lng;
 	}
 	
 	public String getChargeType()
 	{
-		return charge_type;
+		return type;
 	}
 
 	public String getLargeDistrict()
 	{
-		return district_L;
+		return districtL;
 	}
 	
 	public String getSmallDistrict()
 	{
-		return district_S;
+		return districtS;
 	}
 	
 	public String getAddress()
@@ -68,7 +90,11 @@ public class ChargerLocation {
 	
 	public String getParkingNo()
 	{
-		return parking_no;
+		return parkingNo;
 	}
 	
+	public String getImg()
+	{
+		return img;
+	}
 }

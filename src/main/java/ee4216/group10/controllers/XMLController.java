@@ -2,15 +2,22 @@ package ee4216.group10.controllers;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+
 import ee4216.group10.xml.ChargerLocation;
+import ee4216.group10.xml.OpenChargerLocation;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +36,8 @@ public class XMLController {
 	//https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E 
 	//private final String USER_AGENT = "Mozilla/5.0";
 	
-	@RequestMapping("/get-xml")
-	private void sendGet() throws Exception {
+	@RequestMapping(path = "/get-xml", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	private ResponseEntity<List<ChargerLocation>> sendGet() throws Exception {
 
 		String url = "https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E";
 
@@ -55,11 +62,25 @@ public class XMLController {
 			result.append(line);
 		}
 		
-		ArrayList<ChargerLocation> loct = new ArrayList<ChargerLocation>();
+		//System.out.println(result.toString());
 		
-		System.out.println(result.toString());
-
+		XmlMapper mapper = new XmlMapper();
+		OpenChargerLocation openChargerLocation = mapper.readValue(result.toString(), OpenChargerLocation.class);
+		/*
+		for (int i =0 ; i< openChargerLocation.getStationList().getStation().length; i ++)
+		{
+			System.out.println(openChargerLocation.getStationList().getStation()[i].getLocation() + " Latitude: " + openChargerLocation.getStationList().getStation()[i].getLatitude() + " Longtitude: " + openChargerLocation.getStationList().getStation()[i].getLongtitude());
+		}
+		*/
+		List<ChargerLocation> locations = new ArrayList<ChargerLocation>();
+		for(ChargerLocation location: openChargerLocation.getStationList().getStation()) {
+			locations.add(location);
+		}
+		
+		return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
 	}
+	
+
 	
 }
 
