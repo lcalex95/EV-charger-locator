@@ -16,7 +16,7 @@ var app = angular.module('index', ['ui.grid'])
     $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
     
     function getAllLocations() {
-    	$http.get('/get-xml')
+    	$http.get('/get-stations')
     		.success(function(data) {
     			if(data != undefined) {
     				$scope.locations = data;

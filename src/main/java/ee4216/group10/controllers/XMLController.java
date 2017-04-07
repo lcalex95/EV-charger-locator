@@ -82,7 +82,8 @@ public class XMLController {
 	
 	
 	//Get Traffic News XML
-	@RequestMapping(path = "/get-stations", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	/*
+	@RequestMapping(path = "/get-station/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	//private ResponseEntity<List<ChargerLocation>> sendGetTrafficNews() throws Exception {
 	private void sendGetTrafficNews() throws Exception {
 
@@ -113,19 +114,21 @@ public class XMLController {
 		
 		XmlMapper mapper = new XmlMapper();
 		OpenChargerLocation openChargerLocation = mapper.readValue(result.toString(), OpenChargerLocation.class);
-		/*
 		for (int i =0 ; i< openChargerLocation.getStationList().getStation().length; i ++)
 		{
 			System.out.println(openChargerLocation.getStationList().getStation()[i].getLocation() + " Latitude: " + openChargerLocation.getStationList().getStation()[i].getLatitude() + " Longtitude: " + openChargerLocation.getStationList().getStation()[i].getLongtitude());
 		}
-		*/
+		
 		List<ChargerLocation> locations = new ArrayList<ChargerLocation>();
 		for(ChargerLocation location: openChargerLocation.getStationList().getStation()) {
 			locations.add(location);
 		}
 		
 		//return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
-	}
+	} 
+	
+	*/
+
 	
 }
 
