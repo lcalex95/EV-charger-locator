@@ -36,7 +36,7 @@ var app = angular.module('index', ['ui.grid'])
     			    			var contentString =
     			    				$scope.locations[i].location + '<br/>'+
     			    				"Charger Type: "+ $scope.locations[i].chargeType + '<br/>'
-    			    				+'<a href="/streetview?lat='+ $scope.locations[i].latitude+'&&lang='+ $scope.locations[i].longtitude + '">Google Street View</a>'
+    			    				+'<a href="/streetview?lat='+ $scope.locations[i].latitude+'&&lang='+ $scope.locations[i].longtitude + '">Google Street View</a>'+'<br/r>'+
     			    				+'<a href="/routing?lat='+ $scope.locations[i].latitude+'&&lang='+ $scope.locations[i].longtitude + '">Navigate!</a>';
     			    	    	var infowindow = new google.maps.InfoWindow({
     			    	    	    content: contentString
