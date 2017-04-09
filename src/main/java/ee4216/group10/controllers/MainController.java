@@ -16,18 +16,18 @@ public class MainController {
 	public String index() {
 		return "index";
 	}
+	
 	@RequestMapping("/streetview")
 	public String streetView(@RequestParam("lat") float lat,@RequestParam("lang") float lang, Model model){
 		model.addAttribute("lat",lat);
 		model.addAttribute("lng",lang);
 		return "streetview";
 	}
+	
 	@RequestMapping("/routing")
 	public String routing(@RequestParam("lat") float lat,@RequestParam("lang") float lang, Model model){
 		model.addAttribute("lat",lat);
 		model.addAttribute("lng",lang);
 		return "routing";
 	}
-	
-	
 }

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -42,31 +44,10 @@ public class XMLController {
 	private ResponseEntity<List<ChargerLocation>> sendGet() throws Exception {
 
 		String url = "https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E";
-
-		HttpClient client = new DefaultHttpClient();
-		HttpGet request = new HttpGet(url);
-
-		// add request header
-		//request.addHeader("User-Agent", USER_AGENT);
-
-		HttpResponse response = client.execute(request);
-
-		//System.out.println("\nSending 'GET' request to URL : " + url);
-		//System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
-
-		BufferedReader rd = new BufferedReader(
-                       new InputStreamReader(response.getEntity().getContent()));
-
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-			result.append(line);
-		}
-		
-		//System.out.println(result.toString());
+		String result = getXml(url);
 		
 		XmlMapper mapper = new XmlMapper();
-		OpenChargerLocation openChargerLocation = mapper.readValue(result.toString(), OpenChargerLocation.class);
+		OpenChargerLocation openChargerLocation = mapper.readValue(result, OpenChargerLocation.class);
 		/*
 		for (int i =0 ; i< openChargerLocation.getStationList().getStation().length; i ++)
 		{
@@ -81,12 +62,55 @@ public class XMLController {
 		return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
 	}
 	
+	@RequestMapping("/details")
+	public String stationDetails(@RequestParam("no") String no, Model model) throws ClientProtocolException, IOException {
+		
+		String url = "https://opendata.clp.com.hk/GetChargingSectionXML.aspx?lang=%3CLANG%3E";
+		String result = getXml(url);
+		
+		XmlMapper mapper = new XmlMapper();
+		OpenChargerLocation openChargerLocation = mapper.readValue(result, OpenChargerLocation.class);
+		
+		for(ChargerLocation location: openChargerLocation.getStationList().getStation()) {
+			//System.out.println(location.getStationNo());
+			if(location.getStationNo().equals(no)) {
+				System.out.println("Charger at " + location.getLocation() + " found.");
+				model.addAttribute("location", location.getLocation());
+				model.addAttribute("address", location.getAddress());
+				model.addAttribute("chargeType", location.getChargeType());
+				model.addAttribute("parkingNo", location.getParkingNo());
+				model.addAttribute("provider", location.getProvider());
+				model.addAttribute("districtS", location.getSmallDistrict());
+				model.addAttribute("districtL", location.getLargeDistrict());
+				model.addAttribute("lat", location.getLatitude());
+				model.addAttribute("lng", location.getLongtitude());
+				break;
+			}
+		}
+		
+		return "station-details";
+	}
+	
 	//Get Traffic News
 	@RequestMapping(path = "/get-news", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	private ResponseEntity<List<TrafficMessage>> sendGetNews() throws Exception {
 
 		String url = "http://resource.data.one.gov.hk/td/en/specialtrafficnews.xml";
+		String result = getXml(url);
+		
+		XmlMapper mapper = new XmlMapper();
+		OpenTrafficNews openTrafficNews = mapper.readValue(result, OpenTrafficNews.class);
 
+		List<TrafficMessage> trafficMessages = new ArrayList<TrafficMessage>();
+		for(TrafficMessage trafficMessage: openTrafficNews.getTrafficMessage()) {
+			trafficMessages.add(trafficMessage);
+		}
+		
+		return new ResponseEntity<List<TrafficMessage>>(trafficMessages, HttpStatus.OK);
+	}
+	
+	private String getXml(String url) throws ClientProtocolException, IOException {
+		
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
 
@@ -103,18 +127,7 @@ public class XMLController {
 			result.append(line);
 		}
 		
-		//System.out.println(result.toString());
-		
-		XmlMapper mapper = new XmlMapper();
-		OpenTrafficNews openTrafficNews = mapper.readValue(result.toString(), OpenTrafficNews.class);
-
-		List<TrafficMessage> trafficMessages = new ArrayList<TrafficMessage>();
-		for(TrafficMessage trafficMessage: openTrafficNews.getTrafficMessage()) {
-			trafficMessages.add(trafficMessage);
-		}
-		
-		return new ResponseEntity<List<TrafficMessage>>(trafficMessages, HttpStatus.OK);
+		return result.toString();
 	}
-	
 	
 }

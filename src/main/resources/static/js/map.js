@@ -53,7 +53,8 @@ var app = angular.module('index', ['ui.grid'])
             	{ value: 'Others', label: 'Others' }]
     	}},
     	{field: 'latitude', visible: false},
-    	{field: 'longtitude', visible: false}
+    	{field: 'longtitude', visible: false},
+    	{field: 'stationNo', visible: false}
     ]
     $scope.gridOptions = {
     		enableSorting: false,
@@ -83,8 +84,12 @@ var app = angular.module('index', ['ui.grid'])
         	marker.addListener('click', (function(marker,i) {
         		return function(){
         			var contentString =
-        				"Charger Type: "+ data[i].chargeType + '<br/>'
-        				+'<a href="/streetview?lat='+ data[i].latitude+'&&lang='+ data[i].longtitude + '">Google Street View</a>';
+        				data[i].location + '<br/>'
+        				+ "Charger Type: " + data[i].chargeType + '<br/>'
+        				+'<a href="/streetview?lat=' + data[i].latitude+'&&lang='+ data[i].longtitude + '">Google Street View</a>'
+        				+ '<br/>'
+        				+ '<a href="/details?no=' + data[i].stationNo +'">Details</a>';
+        				
         	    	var infowindow = new google.maps.InfoWindow({
         	    	    content: contentString
         	    	});

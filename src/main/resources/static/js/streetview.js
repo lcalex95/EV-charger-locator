@@ -11,14 +11,11 @@ var app = angular.module('streetView', [])
 	    		position: {lat: lat,lng: lng},
 	    		pov: {
 	                heading: 34,
-	                pitch: 10
+	                pitch: 0
 	              }
 	    		});
 	    //map.setStreetView(panorama);
 	    }
 	   
 	    initialize();
-	    
-	     
-		
 	});

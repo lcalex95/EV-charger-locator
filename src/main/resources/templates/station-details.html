@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="streetView" ng-controller="streetViewCtrl">
+<head>
+<meta charset="UTF-8"></meta>
+<title th:text="${location}"></title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="/css/station-details.css"></link>
+
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLUT5kLdoTl5dawmFNlz0tAheiPPCVtxU"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/js/streetview.js"></script>
+
+</head>
+<body>
+	<div class="container">
+	<h2 th:text="${location}"></h2>
+	
+	<div id="street-view"></div>
+	
+	<span id="lat" style="display: none;" th:text="${lat}" ng-model="lat"></span>
+	<span id="lng" style="display: none;" th:text="${lng}" ng-model="lng"></span>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		<h4>Details</h4>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+			<div class="col-sm-4">Address</div>
+			<div class="col-sm-8"><span th:text="${address}"></span></div>
+			</div>
+			
+			<div class="row">
+			<div class="col-sm-4">Charger Type</div>
+			<div class="col-sm-8"><span th:text="${chargeType}"></span></div>
+			</div>
+			
+			<div class="row">
+			<div class="col-sm-4">Parking No.</div>
+			<div class="col-sm-8"><span th:text="${parkingNo}"></span></div>
+			</div>
+			
+			<div class="row">
+			<div class="col-sm-4">Provider</div>
+			<div class="col-sm-8"><span th:text="${provider}"></span></div>
+			</div>
+		</div>
+		
+	</div>
+	</div>
+</body>
+</html>
