@@ -86,9 +86,9 @@ var app = angular.module('index', ['ui.grid'])
         			var contentString =
         				data[i].location + '<br/>'
         				+ "Charger Type: " + data[i].chargeType + '<br/>'
-        				+'<a href="/web-service/streetview?lat=' + data[i].latitude+'&&lang='+ data[i].longtitude + '">Google Street View</a>'
+        				+'<a href="/evc-locator/streetview?lat=' + data[i].latitude+'&&lang='+ data[i].longtitude + '">Google Street View</a>'
         				+ '<br/>'
-        				+ '<a href="/web-service/details?no=' + data[i].stationNo +'">Details</a>';
+        				+ '<a href="/evc-locator/details?no=' + data[i].stationNo +'">Details</a>';
         				
         	    	var infowindow = new google.maps.InfoWindow({
         	    	    content: contentString
@@ -101,7 +101,7 @@ var app = angular.module('index', ['ui.grid'])
         }
     
     function getAllLocations() {
-    	$http.get('/web-service/get-stations')
+    	$http.get('/evc-locator/get-stations')
     	.success(function(data) {
     	if(data != undefined) {
     				$scope.locations = data;
@@ -147,7 +147,7 @@ var app = angular.module('index', ['ui.grid'])
     }
     
     function getTrafficMsgs() {
-    	$http.get('/web-service/get-news')
+    	$http.get('/evc-locator/get-news')
     		.success(function(data) {
     			if(data != undefined) {
     				$scope.trafficMsgs = data;
