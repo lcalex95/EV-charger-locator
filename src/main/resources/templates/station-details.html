@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8"></meta>
 <meta property="fb:app_id" content="393028804386936" />
+<meta property="og:url"
+	th:attr="content='http://hk-ev-charger-locator.tk/details?no=' + ${no}" />
+<meta property="og:type" content="website" />
+<meta property="og:title" th:attr="content='${location}'" />
+<meta property="og:description" th:attr="content='Station Details for ' + ${location}"  />
 <title th:text="${location}"></title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
