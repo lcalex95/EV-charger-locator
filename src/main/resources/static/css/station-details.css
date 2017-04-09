@@ -3,4 +3,10 @@
 #street-view {
 	height: 300px;
 	width: 100%;
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.section {
+	margin-bottom: 16px;
 }

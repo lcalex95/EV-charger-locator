@@ -75,6 +75,7 @@ public class XMLController {
 			//System.out.println(location.getStationNo());
 			if(location.getStationNo().equals(no)) {
 				System.out.println("Charger at " + location.getLocation() + " found.");
+				model.addAttribute("no", location.getStationNo());
 				model.addAttribute("location", location.getLocation());
 				model.addAttribute("address", location.getAddress());
 				model.addAttribute("chargeType", location.getChargeType());
