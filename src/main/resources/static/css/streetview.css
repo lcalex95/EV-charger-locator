@@ -1,10 +1,13 @@
 @CHARSET "UTF-8";
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #street-view {
-        height: 500px;
-      }
-   
+
+/* Ready for Deployment */
+
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#street-view {
+	height: 500px;
+}

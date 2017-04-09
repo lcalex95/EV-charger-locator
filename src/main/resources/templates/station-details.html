@@ -2,6 +2,7 @@
 <html ng-app="streetView" ng-controller="streetViewCtrl">
 <head>
 <meta charset="UTF-8"></meta>
+<meta property="fb:app_id" content="393028804386936" />
 <title th:text="${location}"></title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
@@ -14,26 +15,38 @@
 <script src="./js/streetview.js"></script>
 
 </head>
+
+<!-- Ready for deployment -->
+
 <body>
+ 	<div id="fb-root"></div>
 	<script>
-	(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v2.8&amp;appId=393028804386936";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
+	  window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '393028804386936',
+	      xfbml      : true,
+	      version    : 'v2.8'
+	    });
+	    FB.AppEvents.logPageView();
+	  };
+	
+	  (function(d, s, id){
+	     var js, fjs = d.getElementsByTagName(s)[0];
+	     if (d.getElementById(id)) {return;}
+	     js = d.createElement(s); js.id = id;
+	     js.src = "//connect.facebook.net/en_US/sdk.js";
+	     fjs.parentNode.insertBefore(js, fjs);
+	   }(document, 'script', 'facebook-jssdk'));
+	   
 	</script>
 
 	<nav class="navbar navbar-inverse">
 	  	<div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="/evc-locator">EV Charger Locator</a>
+	      <a class="navbar-brand" href="/evc-locator/">EV Charger Locator</a>
 	    </div>
 	  	</div>
 	</nav>
-	
-	<div id="fb-root"></div>
 	
 	<div class="container">
 	<h2 th:text="${location}"></h2>

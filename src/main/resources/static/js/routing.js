@@ -1,5 +1,6 @@
 var app = angular.module('streetView', [])
 	.controller('streetViewCtrl', function($scope, $http, $log) {
+		// Ready for deployment
 		
 		var lat = parseFloat(document.getElementById('lat').innerHTML);
 	    var lng = parseFloat(document.getElementById('lng').innerHTML);

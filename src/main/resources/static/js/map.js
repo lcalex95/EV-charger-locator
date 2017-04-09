@@ -1,6 +1,6 @@
 var app = angular.module('index', ['ui.grid'])
 	.controller('indexCtrl', function($scope, $http, $log, uiGridConstants) {
-    // default map options
+    // Ready for deployment
 
     var mapOptions = {
         center: {
