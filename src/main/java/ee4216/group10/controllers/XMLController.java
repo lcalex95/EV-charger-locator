@@ -16,6 +16,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import ee4216.group10.xml.ChargerLocation;
 import ee4216.group10.xml.OpenChargerLocation;
 import ee4216.group10.xml.OpenTrafficNews;
+import ee4216.group10.xml.TrafficMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,9 +51,8 @@ public class XMLController {
 
 		HttpResponse response = client.execute(request);
 
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " +
-                       response.getStatusLine().getStatusCode());
+		//System.out.println("\nSending 'GET' request to URL : " + url);
+		//System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
 		BufferedReader rd = new BufferedReader(
                        new InputStreamReader(response.getEntity().getContent()));
@@ -81,13 +81,11 @@ public class XMLController {
 		return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
 	}
 	
-	
-	//Get Traffic News XML
+	//Get Traffic News
 	@RequestMapping(path = "/get-news", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	//private ResponseEntity<List<ChargerLocation>> sendGetTrafficNews() throws Exception {
-	private void sendGetTrafficNews() throws Exception {
+	private ResponseEntity<List<TrafficMessage>> sendGetNews() throws Exception {
 
-		String url = "http://resource.data.one.gov.hk/td/tc/specialtrafficnews.xml";
+		String url = "http://resource.data.one.gov.hk/td/en/specialtrafficnews.xml";
 
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
@@ -95,11 +93,9 @@ public class XMLController {
 		HttpResponse response = client.execute(request);
 
 		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " +
-                       response.getStatusLine().getStatusCode());
+		System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
 
-		BufferedReader rd = new BufferedReader(
-                       new InputStreamReader(response.getEntity().getContent()));
+		BufferedReader rd = new BufferedReader( new InputStreamReader(response.getEntity().getContent()));
 
 		StringBuffer result = new StringBuffer();
 		String line = "";
@@ -107,18 +103,18 @@ public class XMLController {
 			result.append(line);
 		}
 		
+		//System.out.println(result.toString());
+		
 		XmlMapper mapper = new XmlMapper();
 		OpenTrafficNews openTrafficNews = mapper.readValue(result.toString(), OpenTrafficNews.class);
 
-		List<ChargerLocation> locations = new ArrayList<ChargerLocation>();
-		/*
-		 * for(ChargerLocation location: openTrafficNews.getStationList().getStation()) {
-			locations.add(location);
+		List<TrafficMessage> trafficMessages = new ArrayList<TrafficMessage>();
+		for(TrafficMessage trafficMessage: openTrafficNews.getTrafficMessage()) {
+			trafficMessages.add(trafficMessage);
 		}
-		*/
 		
-		//return new ResponseEntity<List<ChargerLocation>>(locations, HttpStatus.OK);
+		return new ResponseEntity<List<TrafficMessage>>(trafficMessages, HttpStatus.OK);
 	}
 	
+	
 }
-
