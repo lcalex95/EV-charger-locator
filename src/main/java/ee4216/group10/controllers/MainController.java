@@ -1,7 +1,9 @@
 package ee4216.group10.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /*
  *  Main Controller that maps Thymeleaf templates to URLs
@@ -14,4 +16,11 @@ public class MainController {
 	public String index() {
 		return "index";
 	}
+	@RequestMapping("/streetview")
+	public String streetView(@RequestParam("lat") float lat,@RequestParam("lang") float lang, Model model){
+		model.addAttribute("lat",lat);
+		model.addAttribute("lng",lang);
+		return "streetview";
+	}
+	
 }

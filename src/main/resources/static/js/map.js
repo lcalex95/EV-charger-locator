@@ -16,15 +16,15 @@ var app = angular.module('index', ['ui.grid'])
     
     function getAllLocations() {
     	$http.get('/get-stations')
-    		.success(function(data) {
-    			if(data != undefined) {
+    	.success(function(data) {
+    	if(data != undefined) {
     				$scope.locations = data;
     				var marker,i;
     				
     				for(i=0;i< $scope.locations.length;i++){
     			    	
-    			    	$log.log($scope.locations[i].latitude);
-    			    	$log.log($scope.locations[i].longtitude);
+    			    	//$log.log($scope.locations[i].latitude);
+    			    	//$log.log($scope.locations[i].longtitude);
     			    	
     			    	marker = new google.maps.Marker({
     			        position: new google.maps.LatLng($scope.locations[i].latitude, $scope.locations[i].longtitude),
@@ -33,7 +33,9 @@ var app = angular.module('index', ['ui.grid'])
     			    	
     			    	marker.addListener('click', (function(marker,i) {
     			    		return function(){
-    			    			var contentString = $scope.locations[i].chargeType;
+    			    			var contentString =
+    			    				"Charger Type: "+ $scope.locations[i].chargeType + '<br/>'
+    			    				+'<a href="/streetview?lat='+ $scope.locations[i].latitude+'&&lang='+ $scope.locations[i].longtitude + '">Google Street View</a>';
     			    	    	var infowindow = new google.maps.InfoWindow({
     			    	    	    content: contentString
     			    	    	});

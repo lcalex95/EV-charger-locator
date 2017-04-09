@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="streetView" ng-controller="streetViewCtrl">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Google Street View</title>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLUT5kLdoTl5dawmFNlz0tAheiPPCVtxU"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+<script src="/js/streetview.js"></script>
+<link rel="stylesheet" href="/css/streetview.css"></link>
+</head>
+<body>
+<span id="lat" style="display: none;" th:text="${lat}" ng-model="lat"></span>
+<span id="lng" style="display: none;" th:text="${lng}" ng-model="lng"></span>
+
+<div id="street-view"></div>
+
+</body>
+</html>
